@@ -33,7 +33,6 @@ coverage.xml
 
 *.log
 local_settings.py
-/backend_django/db.sqlite3
 
 .env
 .venv
