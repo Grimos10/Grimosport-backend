@@ -66,3 +66,7 @@ class Product(models.Model):
         thumbnail = File(thumb_io, name=image.name)
 
         return thumbnail
+    
+
+    def get_category(self):
+        return self.category.name

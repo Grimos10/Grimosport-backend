@@ -49,4 +49,3 @@ class OrderList(APIView):
         return Response(serializer.data)
 
 
-

@@ -33,4 +33,3 @@ class OrderItem(models.Model):
         return '%s' % self.id
     
 
-# Create your models here.
