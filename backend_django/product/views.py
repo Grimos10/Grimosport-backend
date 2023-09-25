@@ -4,11 +4,11 @@ from django.db.models import Q, Count
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import authentication, permissions
+from rest_framework import authentication, permissions, status
 
 
 from .models import Product, Category
-from .serializers import ProductSerializer, CategorySerializer
+from .serializers import ProductSerializer, CategorySerializer, MyProductSerializer, MyCategorySerializer
 
 from order.models import Order, OrderItem
 from order.serializers import OrderSerializer, MyOrderSerializer
@@ -92,3 +92,21 @@ def search(request):
     else:
         return Response({'products': []}) 
     
+
+authentication_classes = [authentication.TokenAuthentication]
+permission_classes = [permissions.IsAuthenticated]
+@api_view(['POST'])
+def set_product(request):
+    serializer = MyProductSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetCategories(APIView):
+    def get(self, request, format=None):
+        categories = Category.objects.all()
+        serializer = MyCategorySerializer(categories, many=True)
+        return Response(serializer.data)
