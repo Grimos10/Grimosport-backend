@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.db.models import Q, Count
+from django.db import connection
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -92,17 +93,34 @@ def search(request):
     else:
         return Response({'products': []}) 
     
-
-authentication_classes = [authentication.TokenAuthentication]
-permission_classes = [permissions.IsAuthenticated]
-@api_view(['POST'])
-def set_product(request):
-    serializer = MyProductSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class SetProduct(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request, format=None):
+        img = request.FILES['image']
+        product = Product.objects.create(
+            category_id=request.data.get('category'),
+            name=request.data.get('name'),
+            slug=request.data.get('slug'),
+            description=request.data.get('description'),
+            price=request.data.get('price'),
+            image=img
+        )
+        if product:
+            product.save()
+            return Response({"message": "Product created"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"message": "Product not created"}, status=status.HTTP_400_BAD_REQUEST)
+                          
+        #serializer = MyProductSerializer(data=request.data)
+        #print(request.data)
+       #print("SPAZIO")
+       # print(serializer)
+      #  if serializer.is_valid():
+        #    serializer.save()
+     #       return Response(serializer.data, status=status.HTTP_201_CREATED)
+      #  else:
+      #      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetCategories(APIView):
@@ -110,3 +128,30 @@ class GetCategories(APIView):
         categories = Category.objects.all()
         serializer = MyCategorySerializer(categories, many=True)
         return Response(serializer.data)
+    
+
+class ProductStats(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self, request, format=None):
+        cursor = connection.cursor()
+        cursor.execute('''
+                    SELECT p.id, p.name, SUM(op.quantity) AS quantity_orders_product, count(o.id) AS quantity_orders
+                    FROM product_product p
+                    LEFT JOIN order_orderitem op ON op.product_id = p.id
+                    LEFT JOIN order_order o ON o.id = op.order_id
+                    GROUP BY p.id, p.name
+                    ORDER BY quantity_orders_product DESC;''')
+        result = cursor.fetchall()
+        #make result to dict
+        i = 0
+        for r in result:
+            result[i] = {
+                'id_product': r[0],
+                'name_product': r[1],
+                'quantity_orders_product': r[2],
+                'quantity_orders': r[3]
+            }
+            i += 1
+        return Response(result)
