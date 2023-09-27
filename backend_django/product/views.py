@@ -147,11 +147,15 @@ class ProductStats(APIView):
         #make result to dict
         i = 0
         for r in result:
+            product = Product.objects.get(id=r[0])
+            serializer = ProductSerializer(product)
             result[i] = {
                 'id_product': r[0],
                 'name_product': r[1],
                 'quantity_orders_product': r[2],
-                'quantity_orders': r[3]
+                'quantity_orders': r[3],
+                'price_product': serializer.data['price'],
+                'absolute_url_product': serializer.data['get_absolute_url'],
             }
             i += 1
         return Response(result)
