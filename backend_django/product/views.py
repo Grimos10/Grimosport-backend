@@ -97,30 +97,15 @@ class SetProduct(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     def post(self, request, format=None):
-        img = request.FILES['image']
-        product = Product.objects.create(
-            category_id=request.data.get('category'),
-            name=request.data.get('name'),
-            slug=request.data.get('slug'),
-            description=request.data.get('description'),
-            price=request.data.get('price'),
-            image=img
-        )
-        if product:
-            product.save()
-            return Response({"message": "Product created"}, status=status.HTTP_201_CREATED)
+        data = { a : (b[0] if isinstance(b, list) else b) for (a,b) in request.data.items() }
+        data['price'] = float(data['price'])
+        serializer = MyProductSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response({"message": "Product not created"}, status=status.HTTP_400_BAD_REQUEST)
-                          
-        #serializer = MyProductSerializer(data=request.data)
-        #print(request.data)
-       #print("SPAZIO")
-       # print(serializer)
-      #  if serializer.is_valid():
-        #    serializer.save()
-     #       return Response(serializer.data, status=status.HTTP_201_CREATED)
-      #  else:
-      #      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print("NON VALIDO")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetCategories(APIView):

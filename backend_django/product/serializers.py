@@ -24,8 +24,8 @@ class MyProductSerializer(serializers.ModelSerializer):
             "id",
             "category",
             "name",
-            "slug",
             "description",
+            "slug",
             "price",
             "image",
         )

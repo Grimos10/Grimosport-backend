@@ -17,6 +17,7 @@ from .serializers import OrderSerializer, MyOrderSerializer
 @authentication_classes([authentication.TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
 def checkout(request):
+    print(request.data)
     serializer = OrderSerializer(data=request.data)
 
     if serializer.is_valid():
