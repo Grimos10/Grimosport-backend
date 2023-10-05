@@ -1,4 +1,6 @@
 import stripe
+import json
+import ast
 
 from django.conf import settings
 from django.http import Http404
@@ -18,7 +20,19 @@ from .serializers import OrderSerializer, MyOrderSerializer
 @permission_classes([permissions.IsAuthenticated])
 def checkout(request):
     print(request.data)
-    serializer = OrderSerializer(data=request.data)
+    data = {}
+    print(request.data['items'])
+    for key, value in request.data.items():
+        if key == 'items':
+            print(value)
+            print(type(value))
+            item_list = []
+            item_list = ast.literal_eval(value)
+            data[key] = item_list
+        else:
+            data[key] = str(value) if value else None
+    print(data)
+    serializer = OrderSerializer(data=data)
 
     if serializer.is_valid():
         stripe.api_key = settings.STRIPE_SECRET_KEY
