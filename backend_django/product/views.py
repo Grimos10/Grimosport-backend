@@ -50,7 +50,7 @@ class MoreBuyedProductList(APIView):
     def get_more_buyed_winter_products(self, request):
         products = Product.objects.filter(category=2)[0:4]
         return products
-    
+
     def get(self, request, format=None):
         products = self.get_object(request)
 
