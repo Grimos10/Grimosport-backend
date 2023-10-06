@@ -18,7 +18,7 @@ from .serializers import OrderSerializer, MyOrderSerializer
 @authentication_classes([authentication.TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
 def checkout(request):
-    if len(request.POST) is not 0:
+    if len(request.POST) != 0:
         data = {}
         items = []
         items = request.POST.getlist('items')
