@@ -70,7 +70,6 @@ class CheckoutTests(APITestCase):
             ],
             'stripe_token': card.id,
         }
-        print(data)
         response = self.client.post(url, data, headers={'Authorization': 'Token ' + self.token.key})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Order.objects.count(), 1)

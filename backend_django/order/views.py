@@ -19,19 +19,18 @@ from .serializers import OrderSerializer, MyOrderSerializer
 @authentication_classes([authentication.TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
 def checkout(request):
-    print(request.data)
-    data = {}
-    print(request.data['items'])
-    for key, value in request.data.items():
-        if key == 'items':
-            print(value)
-            print(type(value))
-            item_list = []
-            item_list = ast.literal_eval(value)
-            data[key] = item_list
-        else:
-            data[key] = str(value) if value else None
-    print(data)
+    if len(request.POST) is not 0:
+        data = {}
+        items = []
+        items = request.POST.getlist('items')
+        for i in range(len(items)):
+            items[i] = ast.literal_eval(items[i])
+        for key, value in request.POST.items():
+            if key != 'items':
+                data[key] = value
+        data['items'] = items
+    else:
+        data = request.data
     serializer = OrderSerializer(data=data)
 
     if serializer.is_valid():
