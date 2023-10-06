@@ -7,7 +7,6 @@ from rest_framework.test import APITestCase
 from .models import Order, OrderItem
 from product.models import Product, Category
 import stripe
-from django.conf import settings
 
 
 class OrdersViewTestCase(TestCase):
