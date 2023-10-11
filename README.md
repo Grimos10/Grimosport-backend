@@ -64,7 +64,7 @@ Here is a table of contents with a few routes in this section:
 
 1. [GET `/latest-products/`](#get-latest-products)
 2. [GET `/stats/`](#get-stats)
-3. [POST `/add-product/`](#get-add-product)
+3. [POST `/add-product/`](#post-add-product)
 
 
 ### GET `/latest-products/`
