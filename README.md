@@ -1,9 +1,9 @@
 # Backend Grimosport Project
 
-Preamble: this is an university project for the "Tecnologie Web" (Web Technology) exam. The project is a web application for a sport shop. The project is divided in two parts: the backend and the frontend. This is the backend part. The frontend part is available at this [link](https://github.com/Grimos10/ecommerce-vue).
+Preamble: this is a university project for the "Tecnologie Web" (Web Technology) exam. The project is a web application for a sports shop. The project is divided in two parts: the backend and the frontend. This is the backend part. The frontend part is available at this [link](https://github.com/Grimos10/ecommerce-vue).
 
 The course was about learning the basics of web development, so the project is not perfect and it's not complete, it's just a prototype.
-Also was about learning Django, so I used Django and Django REST Framework to build the backend.
+It also was about learning Django, so I used Django and Django REST Framework to build the backend.
 
 I decided, just for fun and not beacuse it was necessary, to deploy the project on a server that I manage with a friend of mine, https://grimosport.grimos.dev (API link).
 
@@ -17,7 +17,7 @@ This project includes the following features:
 - Shopping cart and checkout process
 - Order management for both customers and administrators
 
-And use the following dependencies:
+And has the following dependencies:
 
 - `django`
 - `django-rest-framework`
