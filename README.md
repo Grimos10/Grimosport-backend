@@ -5,7 +5,7 @@ Preamble: this is a university project for the "Tecnologie Web" (Web Technology)
 The course was about learning the basics of web development, so the project is not perfect and it's not complete, it's just a prototype.
 It also was about learning Django, so I used Django and Django REST Framework to build the backend.
 
-I decided, just for fun and not beacuse it was necessary, to deploy the project on a server that I manage with a friend of mine, https://grimosport.grimos.dev (API link).
+I decided, just for fun and not beacuse it was necessary, to deploy the project on a server that I manage with a friend of mine, https://grimosportbackend.grimos.dev (API link).
 
 
 ## Dependencies and features
