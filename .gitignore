@@ -47,3 +47,4 @@ backend_django/order/__pycache__/
 backend_django/product/__pycache__/
 backend_django/user/__pycache__/
 backend_django/order/migrations/__pycache__/
+static/

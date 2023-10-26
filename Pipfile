@@ -11,6 +11,7 @@ djoser = "*"
 pillow = "*"
 django-environ = "*"
 stripe = "*"
+uvicorn = "*"
 
 [dev-packages]
 

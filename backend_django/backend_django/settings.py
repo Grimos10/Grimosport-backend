@@ -11,12 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-#xzhlwa2ya((j&12f)#6u+47_2%oo5v-vjdn=yl&#i@9$k369q'
 
-#TODO: Change this to False when deploying
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 STRIPE_SECRET_KEY = env('STRIPE_API_SECRET_KEY')
+BASE_URL = env('BASE_URL')
 
 # Application definition
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://192.168.1.19:8080",
+    "https://grimosport.grimos.dev"
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend_django.urls'
+CSRF_TRUSTED_ORIGINS = ['https://grimosportbackend.grimos.dev']
+
 
 TEMPLATES = [
     {
@@ -133,6 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
